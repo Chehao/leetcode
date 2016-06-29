@@ -1,11 +1,9 @@
 package chehao.leetcode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Twitter {
 	
@@ -53,12 +51,23 @@ public class Twitter {
 			userMap.put(userId, user);
 		}
 		final List<Integer> follows = user.follow;
-		List<Integer> result = list.stream()
+		
+		/*List<Integer> result = list.stream()
 				.filter(t -> follows.contains(t.userId) || t.userId == userId )
 				.map(t-> t.tweetId)
 				.collect(Collectors.toList());
 		List<Integer> r =  result.subList(result.size() > 10 ? result.size() - 10 : 0, result.size());
-		Collections.reverse(r);
+		Collections.reverse(r);*/
+		List<Integer> r = new ArrayList<Integer>();
+		int count = 0;
+		for (int i = list.size() - 1; i >= 0; i--) {
+			if(follows.contains(list.get(i).userId) ||list.get(i).userId == userId){
+				r.add(list.get(i).tweetId);
+				count++;
+				if (count >= 10)
+					break;
+			}
+		}
 		return r;
 	}
 
